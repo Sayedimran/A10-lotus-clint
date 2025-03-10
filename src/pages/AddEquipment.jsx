@@ -15,9 +15,9 @@ const AddEquipment = () => {
     const customization = form.customization.value;
     const time = form.time.value;
     const stoke = form.stoke.value;
-    const  description= form.description.value;
-    const userMail = user.email 
-    const userName = user.displayName
+    const description = form.description.value;
+    const userMail = user.email;
+    const userName = user.displayName;
     const newEquipment = {
       photo,
       name,
@@ -29,33 +29,31 @@ const AddEquipment = () => {
       stoke,
       description,
       userMail,
-      userName
+      userName,
     };
 
-    fetch('http://localhost:5000/sport', {
-      method: 'POST',
+    fetch("http://localhost:5000/sport", {
+      method: "POST",
       headers: {
-        'content-type':'application/json'
+        "content-type": "application/json",
       },
-      body:JSON.stringify(newEquipment)
+      body: JSON.stringify(newEquipment),
     })
-
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         if (data.insertedId) {
           Swal.fire({
             position: "top-center",
             text: "Product Added Successfully",
             icon: "success",
-            showConfirmButton: 'Cool',
+            showConfirmButton: "Cool",
             timer: 1500,
           });
         }
-      })
+      });
     console.log(newEquipment);
-    
-  }
+  };
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6 my-10">
       <h2 className="text-2xl font-bold text-center mb-6">Add New Equipment</h2>

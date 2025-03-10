@@ -3,14 +3,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 
-
 const Register = () => {
   const navigate = useNavigate();
   const [errors, setError] = useState("");
   const { creatNewUser, setUser, updateUserProfile } = useContext(AuthContext);
-  const handleRegister = e => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    
+
     const form = e.target;
 
     const name = form.name.value;
@@ -18,30 +17,30 @@ const Register = () => {
     const photo = form.photo.value;
     const password = form.password.value;
 
-     if (password.length < 6) {
-       setError("Password must be at least 6 characters!");
-     } else if (!/[A-Z]/.test(password)) {
-       setError("Must have at least one uppercase letter!");
-       return;
-     } else if (!/[a-z]/.test(password)) {
-       setError("Must have at least one lowercase letter!");
-       return;
-     }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters!");
+    } else if (!/[A-Z]/.test(password)) {
+      setError("Must have at least one uppercase letter!");
+      return;
+    } else if (!/[a-z]/.test(password)) {
+      setError("Must have at least one lowercase letter!");
+      return;
+    }
 
-    console.log(name ,email ,photo ,password);
+    console.log(name, email, photo, password);
     creatNewUser(email, password)
       .then((result) => {
         const user = result.user;
-        setUser(user)
-        // save new user info to the database 
+        setUser(user);
+        // save new user info to the database
         const createdAt = result?.user?.metadata?.creationTime;
-        const newUser = { name, email ,createdAt }
+        const newUser = { name, email, createdAt };
         fetch("http://localhost:5000/users", {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'content-type': 'application/json'
+            "content-type": "application/json",
           },
-          body: JSON.stringify(newUser)
+          body: JSON.stringify(newUser),
         })
           .then((res) => res.json())
           .then((data) => {
@@ -50,46 +49,42 @@ const Register = () => {
 
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
-             Swal.fire({
-               position: "center",
-               icon: "success",
-               title: "Register Sucsessfully",
-               showConfirmButton: false,
-               timer: 700,
-             }).then(() => {
-               navigate("/"); // Navigate only after the alert disappears
-             });
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Register Sucsessfully",
+              showConfirmButton: false,
+              timer: 700,
+            }).then(() => {
+              navigate("/"); // Navigate only after the alert disappears
+            });
           })
-          .catch(err => {
-           console.log(err);
-           
-        })
+          .catch((err) => {
+            console.log(err);
+          });
         console.log(user);
       })
       .catch((error) => {
-        
         Swal.fire({
-                  position: "center",
-                  icon: "error",
-                  title: error.code,
-                  showConfirmButton: false,
-                  timer: 1000,
-                });
-        
-        setError(...errors, error.code,);
-        
+          position: "center",
+          icon: "error",
+          title: error.code,
+          showConfirmButton: false,
+          timer: 1000,
+        });
+
+        setError(...errors, error.code);
+
         // ..
       });
-
-     
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold mb-4">Register Now!</h2>
-          {errors && <p className="text-center text-red-500">{errors}</p> }
+          {errors && <p className="text-center text-red-500">{errors}</p>}
           <form onSubmit={handleRegister}>
             {/* Full Name */}
             <div className="form-control">
@@ -116,7 +111,6 @@ const Register = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="input input-bordered rounded-xl"
-                
                 autoComplete="email"
               />
             </div>

@@ -11,7 +11,7 @@ const MyEquipmentList = () => {
   useEffect(() => {
     console.log(sports);
   }, [sports]);
- 
+
   const CardInfoDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",

@@ -25,8 +25,10 @@ const Router = createBrowserRouter([
         loader: () => fetch("http://localhost:5000/sport"),
         children: [
           {
-            path: "/category/id",
+            path: "/category/:id",
             element: <SportCard />,
+            
+           
           },
         ],
       },

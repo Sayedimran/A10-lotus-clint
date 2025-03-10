@@ -1,10 +1,7 @@
-
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateEquipment = () => {
-
-    
   const sports = useLoaderData();
   const {
     _id,
@@ -18,7 +15,7 @@ const UpdateEquipment = () => {
     stoke,
     description,
   } = sports;
- 
+
   const handleUpdateEquip = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -54,7 +51,7 @@ const UpdateEquipment = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.modifiedCount > 0 ) {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             position: "top-center",
             text: "Product Added Successfully",

@@ -1,18 +1,31 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLoaderData, useParams } from "react-router-dom";
 
 const SportCard = ({ sport }) => {
-    const {
-      _id,
+  const sportcategory = useLoaderData();
+  const [filterCard, seFilterCard] = useState([]);
+
+  const {
+    _id,
     photo,
     name,
     category,
     price,
-    rating,
-    customization,
-    time,
     stoke,
-    description,
+
   } = sport;
+  
+  console.log(filterCard);
+  
+  const params = useParams();
+  useEffect(() => {
+    fetch(`http://localhost:5000/sports?category=${params.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        seFilterCard(data);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [params.id]);
 
   return (
     <div className="card w-80 mx-auto  shadow-xl  hover:scale-105 transition-transform duration-300 ">
